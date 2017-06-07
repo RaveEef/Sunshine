@@ -83,7 +83,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if(cursor != null){
                     String locationSetting = Utility.getPreferredLocation(getActivity());

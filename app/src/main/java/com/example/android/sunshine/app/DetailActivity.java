@@ -16,7 +16,7 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_launcher);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

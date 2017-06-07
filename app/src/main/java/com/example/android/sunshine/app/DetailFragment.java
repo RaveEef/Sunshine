@@ -137,7 +137,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (data != null && data.moveToFirst()) {
 
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-            mIconView.setImageResource(R.drawable.ic_launcher);
+            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 
             long date = data.getLong(COL_WEATHER_DATE);
             String friendlyDateText = Utility.getDayName(getActivity(), date);
@@ -168,6 +168,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             if (mShareActionProvider != null)
                 mShareActionProvider.setShareIntent(createShareForecastIntent());
         }
+        data.close();
     }
 
     @Override

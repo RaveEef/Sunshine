@@ -16,13 +16,12 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLocation = Utility.getPreferredLocation(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_launcher);
-
-        mLocation = getString(R.string.pref_location_default);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -81,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
         else
             Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed.");
+
     }
 
 

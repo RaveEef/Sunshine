@@ -1,12 +1,16 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.data.WeatherDbHelper;
 
 public class MainActivity extends ActionBarActivity implements ForecastFragment.CallBack {
 
@@ -25,9 +29,21 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         if(findViewById(R.id.weather_detail_container) != null){
             mTwoPane = true;
             if(savedInstanceState == null){
+                //Initializes the detailfragment to today's forecast
+                Cursor c = (new WeatherDbHelper(this)).getReadableDatabase().rawQuery("SELECT * FROM weather", null);
+                c.move(2);
+                Bundle args = new Bundle();
+                args.putParcelable(DetailFragment.DETAIL_URI, WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, c.getLong(c.getColumnIndex("date"))));
+                DetailFragment detailF = new DetailFragment();
+                detailF.setArguments(args);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAILFRAGMENT_TAG)
+                        .replace(R.id.weather_detail_container, detailF, DETAILFRAGMENT_TAG)
                         .commit();
+
+                //Leaves detailfragment blank at initialization
+                //getSupportFragmentManager().beginTransaction()
+                //        .replace(R.id.weather_detail_container, new DetailFragment(), DETAILFRAGMENT_TAG)
+                //        .commit();
             }
         }
         else

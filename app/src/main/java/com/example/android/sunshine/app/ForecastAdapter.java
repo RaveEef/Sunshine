@@ -38,6 +38,13 @@ public class ForecastAdapter extends CursorAdapter {
         super(context, c, flags);
     }
 
+/*    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = super.getView(position, convertView, parent);
+        ListView listView = (ListView)view.findViewById(R.id.listview_forecast);
+        return listView;
+    }*/
+
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         int viewType = getItemViewType(cursor.getPosition());
@@ -52,10 +59,6 @@ public class ForecastAdapter extends CursorAdapter {
                 break;
             }
         }
-        /*if(viewType == VIEW_TYPE_TODAY)
-            layoutId = R.layout.list_item_forecast_today;
-        else if(viewType == VIEW_TYPE_FUTURE_DAY)
-            layoutId = R.layout.list_item_forecast;*/
 
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);

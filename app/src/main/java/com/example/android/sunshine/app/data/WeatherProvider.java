@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.Time;
+import android.util.Log;
 
 /**
  * Created by evast on 19-5-2017.
@@ -243,6 +245,7 @@ public class WeatherProvider extends ContentProvider {
     private void normalizeDate(ContentValues values){
         if(values.containsKey(WeatherContract.WeatherEntry.COLUMN_DATE)){
             long dateValue = values.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
+            Log.d("WP JulianDay", String.valueOf(Time.getJulianDay(dateValue, (new Time()).gmtoff)));
             values.put(WeatherContract.WeatherEntry.COLUMN_DATE, WeatherContract.normalizeDate(dateValue));
         }
     }

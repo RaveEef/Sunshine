@@ -11,7 +11,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -103,25 +102,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.detailfragment, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
-
-        mShareActionProvider = new ShareActionProvider(getActivity())
-        {
-            @Override
-            public View onCreateActionView() {
-                return null;
-            }
-        };
-        int shareID = getActivity().getResources().getIdentifier("ic_menu_share", "drawable", "android");
-        menuItem.setIcon(shareID);
-        MenuItemCompat.setActionProvider(menuItem, mShareActionProvider);
-       // mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         if(mForecastStr != null)
             mShareActionProvider.setShareIntent(createShareForecastIntent());
-        else
-            Log.d(LOG_TAG, "Share action provided is null?");
     }
 
     private Intent createShareForecastIntent() {

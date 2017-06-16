@@ -16,6 +16,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    public static String KEY_TODAY_LAYOUT = "use_today_layout";
 
     private String mLocation;
     private boolean mTwoPane;
@@ -31,11 +32,29 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             if(savedInstanceState == null){
                 //Initializes the detailfragment to today's forecast
                 Cursor c = (new WeatherDbHelper(this)).getReadableDatabase().rawQuery("SELECT * FROM weather", null);
-                c.move(2);
-                Bundle args = new Bundle();
-                args.putParcelable(DetailFragment.DETAIL_URI, WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, c.getLong(c.getColumnIndex("date"))));
                 DetailFragment detailF = new DetailFragment();
-                detailF.setArguments(args);
+                if(c.moveToFirst()){
+                    Bundle args = new Bundle();
+                    long date = c.getLong(c.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE));
+                    args.putParcelable(
+                            DetailFragment.DETAIL_URI,
+                            WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                                    mLocation,
+                                    date));
+                    detailF.setArguments(args);
+                    /*while(!c.isAfterLast() && !(args.containsKey(DetailFragment.DETAIL_URI))){
+                        long date = c.getLong(c.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE));
+                        int dateJulian = Time.getJulianDay(date, (new Time()).gmtoff);
+                        int currentJulian = Time.getJulianDay(System.currentTimeMillis(), (new Time()).gmtoff);
+                        if(dateJulian == currentJulian){
+                            args.putParcelable(DetailFragment.DETAIL_URI,
+                                    WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                                            mLocation,
+                                            date));
+                            detailF.setArguments(args);
+                        }
+                    }*/
+                }
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.weather_detail_container, detailF, DETAILFRAGMENT_TAG)
                         .commit();
@@ -46,11 +65,14 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
                 //        .commit();
             }
         }
-        else
+        else {
             mTwoPane = false;
+            getSupportActionBar().setElevation(0f);
+        }
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
+        forecastFragment.setUseTodayLayout(!mTwoPane);
+
     }
 
     @Override

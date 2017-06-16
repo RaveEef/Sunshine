@@ -111,9 +111,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
             Time dayTime = new Time();
             dayTime.setToNow();
-
-            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
-
+            int julianStartDay = Time.getJulianDay(dayTime.toMillis(false), dayTime.gmtoff);
             dayTime = new Time();
 
             for (int i = 0; i < weatherArray.length(); i++) {
@@ -175,8 +173,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     protected Void doInBackground(String... params) {

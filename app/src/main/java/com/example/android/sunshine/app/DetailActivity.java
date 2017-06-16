@@ -14,9 +14,6 @@ public class DetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
-
         if (savedInstanceState == null) {
             Bundle args = new Bundle();
             args.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());

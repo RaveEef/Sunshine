@@ -35,10 +35,10 @@ public class Utility {
         if (julianDay == currentJulianDay) {
             String today = context.getString(R.string.today);
             int formatId = R.string.format_full_friendly_date;
-            return context.getString(
+            return String.format(context.getString(
                     formatId,
                     today,
-                    getFormattedMonthDay(context, dateInMillis));
+                    getFormattedMonthDay(context, dateInMillis)));
         } else if ( julianDay < currentJulianDay + 7 ) {
             // If the input date is less than a week in the future, just return the day name.
             return getDayName(context, dateInMillis);
@@ -52,14 +52,13 @@ public class Utility {
     public static String getDayName(Context context, long dateInMillis) {
         // If the date is today, return the localized version of "Today" instead of the actual
         // day name.
-
         Time t = new Time();
         t.setToNow();
         int julianDay = Time.getJulianDay(dateInMillis, t.gmtoff);
         int currentJulianDay = Time.getJulianDay(System.currentTimeMillis(), t.gmtoff);
         if (julianDay == currentJulianDay) {
             return context.getString(R.string.today);
-        } else if ( julianDay == currentJulianDay +1 ) {
+        } else if ( julianDay == currentJulianDay +1) {
             return context.getString(R.string.tomorrow);
         } else {
             Time time = new Time();

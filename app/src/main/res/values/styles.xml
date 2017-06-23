@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/sunshine_blue</item>
         <item name="colorPrimaryDark">@color/sunshine_dark_blue</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Sunshine.ShowTitle</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -13,12 +14,19 @@
 
     <style name="SettingsTheme" parent="AppTheme">
     </style>
+
+    <style name="ActionBar.Solid.Sunshine.ShowTitle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="logo">@mipmap/ic_launcher</item>
+    </style>
     
     <style name="ActionBar.Solid.Sunshine.NoTitle" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="displayOptions">useLogo|showHome</item>
         <item name="logo">@drawable/ic_logo</item>
     </style>
 
-    <style name="ForecastListStyle"/>
+    <style name="ForecastListStyle">
+        <item name="android:divider">@null</item>
+    </style>
 
 </resources>

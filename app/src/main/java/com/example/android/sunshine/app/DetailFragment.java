@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
@@ -156,6 +157,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
             String description = data.getString(COL_WEATHER_DESC);
             mDescriptionView.setText(description);
+            mIconView.setContentDescription(description);
 
             boolean isMetric = Utility.isMetric(getActivity());
             String highString = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MAX_TEMP), isMetric);
@@ -177,6 +179,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             if (mShareActionProvider != null)
                 mShareActionProvider.setShareIntent(createShareForecastIntent());
         }
+        //LAZY
+        ScrollView scrollView = (ScrollView)getActivity().findViewById(R.id.scroll_view_detail);
+        scrollView.scrollTo(0, scrollView.getBottom());
     }
 
     @Override

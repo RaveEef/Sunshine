@@ -162,6 +162,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             mListView.smoothScrollByOffset(mPosition);
             mListView.setItemChecked(mPosition, true);
         }
+        //BEING LAZY
+        mListView.performItemClick(mListView.getChildAt(0), 0, mListView.getItemIdAtPosition(0));
     }
 
     @Override
